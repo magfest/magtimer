@@ -20,8 +20,6 @@ There are two timers you can set:
 
 For example, you might give a band 20 minutes to setup, and 40 minutes to play.
 
-The timers will output 
-
 Timer 1 - The Setup Timer
 ===========
 When you start the setup countdown, the display will read SETUP.  
@@ -33,7 +31,7 @@ This indicates you are behind schedule, and now the band is eating into the play
 Timer 2 - Playing Timer
 ====
 This timer will be:
-GREEN if a band is OK to play one more song (time > 5mins)
-YELLOW if a band should only play one more song (time < 5mins)
-RED if a band should not start another song after this one (time < 2mins)
-FLASHING LIKE CRAZY AND FLIPPING OUT if they're out of time.
+- GREEN if a band is OK to play one more song (time > 5mins)
+- YELLOW if a band should only play one more song (time < 5mins)
+- RED if a band should not start another song after this one (time < 2mins)
+- FLASHING LIKE CRAZY AND FLIPPING OUT if they're out of time.
