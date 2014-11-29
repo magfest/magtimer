@@ -145,7 +145,7 @@
 		    } else if (g_current_time_left < MINS_TIL_LAST_SONG_WARNING) {
 		        msg.innerHTML = "<span style='color:yellow;'>ONLY 1 MORE SONG</span>";
 		    } else {
-		        msg.innerHTML = "<span style='color:red;'>OK TO PLAY NEXT SONG</span>";
+		        msg.innerHTML = "<span style='color:green;'>OK TO PLAY NEXT SONG</span>";
 		    }
 	    }
 	
@@ -379,9 +379,14 @@
             color: white;
         }
 
+        a.timeset
+        {
+            color: grey;
+        }
+
         a.controls
         {
-            color: green;
+            color: #CCCCCC;
         }
 
         a.about
@@ -393,10 +398,10 @@
         {
             font-size: small;
             font-size: 2vw;
-            text-align: right;
+            text-align: center;
             position: fixed;
             bottom: 0;
-            right: 0;
+            left: 0;
             width: 100%;
             padding: 10px;
             background: black;
@@ -432,28 +437,23 @@
             /*letter-spacing:-10px*/
         }
     </style>
-    <title>MAGFest Concert Timer</title>
+    <title>MAGFest Timer</title>
 </head>
 
 <body onload="page_load();" onkeyup="on_key()">
     <div id="bigdisplay">
-
         <span id="timer">00:00:00</span>
         <br>
         <span id="msg">SETUP TIME</span>
-
     </div>
 
     <footer class="settings">
-
-        <a href="javascript:void(0)" onclick="prompt_for_setup_time();">Setup Time = <span id="setup_time">X</span> min</a> &bull;
-        <a href="javascript:void(0)" onclick="prompt_for_play_time();">Playing Time = <span id="play_time">X</span> min</a> &bull;
-        <a href="javascript:void(0)" class="controls" id="start_stop_link" onclick="toggle_countdown();"><b>GO!</b></a> &bull;
-        <a href="javascript:void(0)" class="controls" id="reset_link" onclick="reset_timers();"><b>[RESET]</b></a> &bull;
-        <a href="javascript:void(0)" class="controls" id="skip_link" onclick="switch_to_play_timer();"><b>[SKIP SETUP]</b></a> &bull;
-        <a href="javascript:alert('&copy; 2011 Dominic Cerquetti v1.1 7/23/11');" class="about">MAGFest Timer</a>
-
+        <a href="javascript:void(0)" title="Set setup time [1]" class="timeset" onclick="prompt_for_setup_time();">Setup Time = <b><span id="setup_time">X</span> min</b></a> &bull;
+        <a href="javascript:void(0)" title="Set play time [2]" class="timeset" onclick="prompt_for_play_time();">Playing Time = <b><span id="play_time">X</span> min</b></a> &bull;
+        <a href="javascript:void(0)" title="Start/Stop [space]" class="controls" id="start_stop_link" onclick="toggle_countdown();"><b>GO!</b></a> &bull;
+        <a href="javascript:void(0)" title="Reset timer [R]"class="controls" id="reset_link" onclick="reset_timers();"><b>[RESET]</b></a> &bull;
+        <a href="javascript:void(0)" title="Skip setup [S]"class="controls" id="skip_link" onclick="switch_to_play_timer();"><b>[SKIP SETUP]</b></a> &bull;
+        <a href="javascript:alert('&copy; 2011 Dominic Cerquetti v1.1 7/23/11');" title="About MAGFest Timer" class="about">MAGFest Timer</a>
     </footer>
-
 </body>
 </html>
