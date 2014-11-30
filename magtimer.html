@@ -381,37 +381,17 @@
             font-family: Arial, sans-serif;
         }
 
-        a
+        a, a:visited
         {
-            color: red;
-        }
-       
-        a:visited
-        {
-            color: red;
+            color: grey;
         }
 
-        a:hover
+        a:hover, a.timeset:hover, a.controls:hover, a.about:hover 
         {
             color: white;
         }
 
-        a.timeset:hover
-        {
-            color: white;
-        }
-
-        a.controls:hover 
-        {
-            color: white;
-        }
-
-        a.about:hover
-        {
-            color: white;
-        }
-
-        a.timeset
+        a.timeset, a.about
         {
             color: grey;
         }
@@ -420,26 +400,7 @@
         {
             color: #CCCCCC;
         }
-
-        a.about
-        {
-            color: grey;
-        }
-
-        footer.settings
-        {
-            font-size: small;
-            font-size: 2vw;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 10px;
-            background: black;
-            color: grey;
-        }
-
+        
         #bigdisplay
         {
             margin: auto;
@@ -468,7 +429,22 @@
             color:#aaaaaa;
             /*letter-spacing:-10px*/
         }
+
+        footer.settings
+        {
+            font-size: small;
+            font-size: 2vw;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            background: black;
+            color: grey;
+        }
     </style>
+
     <title>MAGFest Timer</title>
 </head>
 
