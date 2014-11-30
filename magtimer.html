@@ -6,9 +6,10 @@
  1) download this HTML file
  2) open it in a browser
 
- I DIDN'T KNOW ABOUT JQUERY WHEN I WROTE THIS FOREVER AGO. I SORRY.
+ DOM DIDN'T KNOW ABOUT JQUERY WHEN He WROTE THIS FOREVER AGO. HE SORRY.
  license: TBD, for now don't sell this as a standalone program.
  (c) 2011 Dominic Cerquetti
+ jQuery and other enhancements added by Will Henson 2014
  
  REQUIREMENTS: No external dependencies that include external files, needs to work on any laptop/phone/etc
  -->
@@ -96,7 +97,7 @@
 	    var disp_mins = pad_with_zeroes(mins,2);
 	    var disp_hours = hours;
 
-	    document.getElementById("timer").innerHTML = hours + ":" + disp_mins + ":" + disp_secs;
+	    $("#timer").html(hours + ":" + disp_mins + ":" + disp_secs);
     }
 
     function on_countdown_finished() 
@@ -105,7 +106,7 @@
     }
 
     function set_bgcolor(color) {
-        document.getElementById("bigdisplay").style.backgroundColor=color;
+        $("#bigdisplay").css("background", color);
     }
 
     function set_crazy_blink(onoff) 
@@ -134,39 +135,32 @@
     {
 	    set_timer_display( g_current_time_left );
 	
-	    var start_stop_link = document.getElementById("start_stop_link")
 	    if (g_is_countdown_enabled) {
-		    start_stop_link.innerHTML = "<b>[PAUSE]</b>";
+            $("#start_stop_link").html("<b>[PAUSE]</b>");
 	    } else {
-		    start_stop_link.innerHTML = "<b>[GO!]</b>";
+            $("#start_stop_link").html("<b>[GO]</b>");
 	    }
 	
-	    var msg = document.getElementById("msg");
-
 	    if (g_is_countdown_enabled) {
 		    set_crazy_blink(is_end_of_timer());
 	    }
 	
 	    if (is_end_of_timer()) {
-		    msg.innerHTML = "<span style='color:red;'>TIME OVER!</span>";
+	        $("#msg").html("TIME OVER!").css("color", "red");
 	    } else if (!g_is_countdown_enabled) {
-	        msg.innerHTML = "<span style='color:cyan;'>-paused-</span>";
+	        $("#msg").html("-paused-").css("color", "cyan");
 	    } else if (g_is_setup_timer_active) {
-	        msg.innerHTML = "<span style='color:grey;'>BAND SETUP</span>";
+	        $("#msg").html("SETUP").css("color", "#CCCCCC");
 	    } else if (g_current_time_left < MINS_TIL_LAST_SONG_MUST_STOP) {
-	        msg.innerHTML = "<span style='color:red;'>NO MORE SONGS</span>";
+	        $("#msg").html("NO MORE SONGS").css("color", "red");
 	    } else if (g_current_time_left < MINS_TIL_LAST_SONG_WARNING) {
-	        msg.innerHTML = "<span style='color:yellow;'>ONLY 1 MORE SONG</span>";
+	        $("#msg").html("ONLY 1 MORE SONG").css("color", "yellow");
 	    } else {
-	        msg.innerHTML = "<span style='color:#00FF00;'>OK TO PLAY NEXT SONG</span>";
+	        $("#msg").html("OK TO PLAY NEXT SONG").css("color", "#00FF00");
 	    }
 
-	
-	    var play_time = document.getElementById("play_time");
-	    var setup_time = document.getElementById("setup_time");
-	
-	    setup_time.innerHTML = g_setup_time / 60;
-	    play_time.innerHTML = g_playing_time / 60;
+	    $("#setup_time").html(g_setup_time / 60)
+	    $("#play_time").html(g_playing_time / 60);
     }
 
     // set everything to OFF and original values for timers.
@@ -267,6 +261,10 @@
 	    if (old_time == g_setup_time) {
 		    return;
 	    }
+
+	    while (g_setup_time < 0 || isNaN(g_setup_time)) {
+	        g_setup_time = prompt("enter setup time, in minutes (number 0 or greater)", g_setup_time / 60) * 60;
+	    }
 	
 	    g_is_countdown_enabled = false;
 	    reset_timers();
@@ -283,6 +281,10 @@
 	    if (old_time == g_playing_time) {
 		    return;
 	    }
+
+	    while (g_playing_time <= 0 || isNaN(g_playing_time)) {
+	        g_playing_time = prompt("enter playing time, in minutes (number greater than 0)", g_playing_time / 60) * 60;
+	    }
 	
 	    g_is_countdown_enabled = false;
 	    reset_timers();
@@ -292,82 +294,81 @@
 	    update_display();
     }
 
-    function page_load() 
-    {
-	    // TEST g_setup_time = 1;
-	    // TEST g_playing_time = 15;
+    // page_load
+    $(function() {
+        g_playing_time = local_store_get('g_playing_time', 0);
+        g_setup_time = local_store_get('g_setup_time', 0);
 
-	    g_playing_time = local_store_get('g_playing_time', 0);
-	    g_setup_time =   local_store_get('g_setup_time', 0);
+        if (isNaN(g_playing_time)) {
+            g_playing_time = 0;
+        }
 
-	    if (isNaN(g_playing_time)) {
-		    g_playing_time = 0;
-	    }
-	
-	    if (isNaN(g_setup_time)) {
-		    g_setup_time = 0;
-	    }
-	
-	    reset_timers();
-	
-	    update_display();
-    }
+        if (isNaN(g_setup_time)) {
+            g_setup_time = 0;
+        }
 
-    var g_dash_count = 0;
-    function on_key(e)
-    {
-	    if (!e) var e = window.event; 
-		
-	    if (e.keyCode) { 
-		    code = e.keyCode; 
-	    } else if (e.which) { 
-		    code = e.which; 
-	    } 
-	
-	    var key = String.fromCharCode(code);
-	
-	    switch (key) {
-		    case ' ':
-			    toggle_countdown();
-			    break;
-		    case 'R':
-			    reset_timers();
-			    break;
-		    case 'S':
-			    switch_to_play_timer();
-			    break;
-		    case '1':
-			    prompt_for_setup_time();
-			    break;
-		    case '2':
-			    prompt_for_play_time();
-			    break;
-			
-		    // debug junk. press 9 key three times then you can press '0' to skip 30 sec
-		    case '9':
-			    g_dash_count++;
-			    if (g_dash_count > 3) {
-				    g_dash_count = 0;
-			    }
-			    break;
-		    case '0':
-			    if (g_dash_count == 3) {
-				    g_current_time_left -= 30;
-				    if (g_current_time_left < 0) {
-					    g_current_time_left = 0;
-				    }
-				    update_display();
-			    }
-			    break;
-		    case 'B':
-			    if (g_dash_count == 3) {
-				    set_crazy_blink(!g_crazy_blink);	
-			    }
-			    break;
-		    default:
-			    break;
-	    }
-    }
+        reset_timers();
+
+        update_display();
+    });
+
+    // keyup - for keyboard shortcuts
+    //var g_dash_count = 0;
+    $(document).keyup(function(e) {
+        if (!e) var e = window.event;
+
+        if (e.keyCode) {
+            code = e.keyCode;
+        } else if (e.which) {
+            code = e.which;
+        }
+
+        var key = String.fromCharCode(code);
+
+        switch (key) {
+            case ' ':
+                toggle_countdown();
+                break;
+            case 'R':
+            case 'r':
+                reset_timers();
+                break;
+            case 'S':
+            case 's':
+                switch_to_play_timer();
+                break;
+            case '1':
+                prompt_for_setup_time();
+                break;
+            case '2':
+                prompt_for_play_time();
+                break;
+
+                // debug junk. press 9 key three times then you can press '0' to skip 30 sec
+                //case '9':
+                //    g_dash_count++;
+                //    if (g_dash_count > 3) {
+                //	    g_dash_count = 0;
+                //    }
+                //    break;
+                //case '0':
+                //    if (g_dash_count == 3) {
+                //	    g_current_time_left -= 30;
+                //	    if (g_current_time_left < 0) {
+                //		    g_current_time_left = 0;
+                //	    }
+                //	    update_display();
+                //    }
+                //    break;
+                //case 'B':
+                //    if (g_dash_count == 3) {
+                //	    set_crazy_blink(!g_crazy_blink);	
+                //    }
+                //    break;
+                //default:
+                //    break;
+        }
+    });
 
     </script>
 
@@ -385,12 +386,27 @@
             color: red;
         }
        
-        a.visited
+        a:visited
         {
             color: red;
         }
 
-        a.active
+        a:hover
+        {
+            color: white;
+        }
+
+        a.timeset:hover
+        {
+            color: white;
+        }
+
+        a.controls:hover 
+        {
+            color: white;
+        }
+
+        a.about:hover
         {
             color: white;
         }
@@ -456,7 +472,7 @@
     <title>MAGFest Timer</title>
 </head>
 
-<body onload="page_load();" onkeyup="on_key()">
+<body>
     <div id="bigdisplay">
         <span id="timer">00:00:00</span>
         <br>
@@ -469,7 +485,7 @@
         <a href="javascript:void(0)" title="Start/Stop [space]" class="controls" id="start_stop_link" onclick="toggle_countdown();"><b>GO!</b></a> &bull;
         <a href="javascript:void(0)" title="Reset timer [R]" class="controls" id="reset_link" onclick="reset_timers();"><b>[RESET]</b></a> &bull;
         <a href="javascript:void(0)" title="Skip setup [S]" class="controls" id="skip_link" onclick="switch_to_play_timer();"><b>[SKIP SETUP]</b></a> &bull;
-        <a href="javascript:alert('&copy; 2011 Dominic Cerquetti v1.1 7/23/11');" title="About MAGFest Timer" class="about">MAGFest Timer</a>
+        <a href="javascript:alert('&copy; 2014 MAGFest\nOriginally by Dominic Cerquetti 7/23/11\nEnhancements by Will Henson 2014');" title="About MAGFest Timer" class="about">MAGFest Timer</a>
     </footer>
 </body>
 </html>
