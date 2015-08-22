@@ -1,4 +1,11 @@
-<html><SCRIPT LANGUAGE="JavaScript">
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>MAG Timer</title>
+</head>
+
+<SCRIPT LANGUAGE="JavaScript">
 
 // MAGFEST TIMER
 
@@ -350,52 +357,65 @@ function on_key(e)
 </SCRIPT>
 
 <style>
+
+body
+	{
+	background-color:black;
+	color:white;
+	}
+
+header
+	{
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+    align-content:center;
+    justify-content:center;
+	position:absolute;
+	top:0px;
+	padding:20px;
+	}
+
 .big
-{
-font-size:2000%;
-font-weight: bold;
-color:#ffffff
-}
+	{
+	font-size:2000%;
+	font-weight: bold;
+	color:#ffffff
+	}
 .msg
-{
-font-size:800%;
-font-weight: bold;
-color:#aaaaaa
-letter-spacing:-10px
-}
+	{
+	font-size:800%;
+	font-weight: bold;
+	color:#aaaaaa
+	letter-spacing:-10px
+	}
+
+footer
+	{
+	position:fixed;
+	bottom:0px;
+	right:0px;
+	}
+
 </style>
 
-<body bgcolor="black" text="red" style="overflow: hidden" link="red" vlink="red" alink="white" onload="page_load();" onkeyup="on_key()">
+<body onload="page_load();" onkeyup="on_key()">
 
-<center>
-<table border="0" width="1024" height="740" cellspacing="0" cellpadding="0" id="bgtable">
-<tr>
-<td valign=center border=0>
+<header>
+	<span id="timer" class="big">00:00:00</span>
 
-<center>
-<span id="timer" class="big">00:00:00</span>
-<span id="msg" class="msg">SETUP TIME</span>
-</center>
+	<span id="msg" class="msg">SETUP TIME</span>
+</header>
 
-</td>
-</tr>
+<footer>
+	<a href="javascript:void(0)" onclick="prompt_for_setup_time();">Set Setup Time</a> |
+	<a href="javascript:void(0)" onclick="prompt_for_play_time();">Set Playing Time</a> | 
+	<a href="javascript:void(0)" id="start_stop_link" onclick="toggle_countdown();">[GO!]</a>
+	<a href="javascript:void(0)" onclick="reset_timers();">[RESET]</a>
+	<a href="javascript:void(0)" onclick="switch_to_play_timer();">[SKIP SETUP]</a>
 
-<tr>
-<td height=0 align="right" valign="bottom">
-<font size=-1>
-<A HREF="javascript:void(0)" onclick="prompt_for_setup_time();">Set Setup Time</A> |
-<A HREF="javascript:void(0)" onclick="prompt_for_play_time();">Set Playing Time</A> | 
-<A HREF="javascript:void(0)" id="start_stop_link" onclick="toggle_countdown();">[GO!]</A>
-<A HREF="javascript:void(0)" onclick="reset_timers();">[RESET]</A>
-<A HREF="javascript:void(0)" onclick="switch_to_play_timer();">[SKIP SETUP]</A>
-<br/>
-<font color=grey>
 Magfest Timer (c) 2011 Dominic Cerquetti v1.1 7/23/11 | Setup(min)=<span id="setup_time">X</span> | Play(min)=<span id="play_time">X</span>
-</font>
-</td>
-</tr>
-</table>
-</center>
+</footer>
 
 </body>
 </html>
