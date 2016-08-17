@@ -3,7 +3,7 @@ magtimer
 
 A one-page HTML+JS concert countdown clock for stage managers to display time and songs remaining to bands on-stage
 
-Working demo here: http://magfest.org/demos/magtimer/magtimer.html
+Working demo here: http://old.magfest.org/demos/magtimer/magtimer.html
 
 Design goals:
 - Only one HTML page, no external dependencies not embedded in the page
