@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<!--
- MAGFEST TIMER
 
- INSTRUCTIONS:
- 1) download this HTML file
- 2) open it in a browser
+<head>
+	<meta charset="utf-8">
+	<title>MAG Timer</title>
+
+	<link rel="stylesheet" type="text/css" href="timer.css">
+	
+</head>
+
+<!--
+// MAGFEST TIMER
 
  DOM DIDN'T KNOW ABOUT JQUERY WHEN He WROTE THIS FOREVER AGO. HE SORRY.
  license: TBD, for now don't sell this as a standalone program.
@@ -136,9 +141,9 @@
 	    set_timer_display( g_current_time_left );
 	
 	    if (g_is_countdown_enabled) {
-            $("#start_stop_link").html("<b>[PAUSE]</b>");
+            $("#start_stop_link").html("<button>Pause</button>");
 	    } else {
-            $("#start_stop_link").html("<b>[GO]</b>");
+            $("#start_stop_link").html("<button>GO!</button>");
 	    }
 	
 	    if (g_is_countdown_enabled) {
@@ -372,96 +377,27 @@
 
     </script>
 
-    <style type="text/css">
-        body
-        {
-            background: black;
-            color: red;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
-
-        a, a:visited
-        {
-            color: grey;
-        }
-
-        a:hover, a.timeset:hover, a.controls:hover, a.about:hover 
-        {
-            color: white;
-        }
-
-        a.timeset, a.about
-        {
-            color: grey;
-        }
-
-        a.controls
-        {
-            color: #CCCCCC;
-        }
-        
-        #bigdisplay
-        {
-            margin: auto;
-            text-align: center;
-            vertical-align: middle;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        #timer
-        {
-            font-size:2000%;
-            font-size: 24vw;
-            font-weight: bold;
-            color:#ffffff
-        }
-
-        #msg
-        {
-            font-size:800%;
-            font-size: 8vw;
-            font-weight: bold;
-            color:#aaaaaa;
-            /*letter-spacing:-10px*/
-        }
-
-        footer.settings
-        {
-            font-size: small;
-            font-size: 2vw;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 10px;
-            background: black;
-            color: grey;
-        }
-    </style>
-
-    <title>MAGFest Timer</title>
-</head>
-
 <body>
-    <div id="bigdisplay">
-        <span id="timer">00:00:00</span>
-        <br>
-        <span id="msg">SETUP TIME</span>
-    </div>
 
-    <footer class="settings">
-        <a href="javascript:void(0)" title="Set setup time [1]" class="timeset" onclick="prompt_for_setup_time();">Setup Time = <b><span id="setup_time">X</span> min</b></a> &bull;
-        <a href="javascript:void(0)" title="Set play time [2]" class="timeset" onclick="prompt_for_play_time();">Playing Time = <b><span id="play_time">X</span> min</b></a> &bull;
-        <a href="javascript:void(0)" title="Start/Stop [space]" class="controls" id="start_stop_link" onclick="toggle_countdown();"><b>GO!</b></a> &bull;
-        <a href="javascript:void(0)" title="Reset timer [R]" class="controls" id="reset_link" onclick="reset_timers();"><b>[RESET]</b></a> &bull;
-        <a href="javascript:void(0)" title="Skip setup [S]" class="controls" id="skip_link" onclick="switch_to_play_timer();"><b>[SKIP SETUP]</b></a> &bull;
-        <a href="javascript:alert('&copy; 2014 MAGFest\nOriginally by Dominic Cerquetti 7/23/11\nEnhancements by Will Henson 2014');" title="About MAGFest Timer" class="about">MAGFest Timer</a>
-    </footer>
+<header id="bigdisplay">
+	<span id="timer" class="clock">00:00:00</span>
+
+	<span id="msg" class="msg">SETUP TIME</span>
+</header>
+
+<footer class="settings">
+	<div class="leftfoot">
+		<a href="javascript:void(0)" onclick="prompt_for_setup_time();"><button>Set Setup Time</button></a>
+		<a href="javascript:void(0)" onclick="prompt_for_play_time();"><button>Set Playing Time</button></a>
+	</div><!-- /leftfoot -->
+	<div class="rightfoot">
+		<a href="javascript:void(0)" id="start_stop_link" onclick="toggle_countdown();"><button>GO!</button></a>
+			<br />
+		<a href="javascript:void(0)" onclick="reset_timers();"><button>RESET</button></a>
+		<a href="javascript:void(0)" onclick="switch_to_play_timer();"><button>SKIP SETUP</button></a>
+	</div><!-- /rightfoot -->
+<!--Magfest Timer (c) 2011 Dominic Cerquetti v1.1 7/23/11 | Setup(min)=<span id="setup_time">X</span> | Play(min)=<span id="play_time">X</span>-->
+</footer>
+
 </body>
 </html>
